@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Paper desk for pump.fun: NEST / VOID / PRINT. No keys.",
+  "description": "Paper nest desk for pump.fun: VOID / NEST / PRINT. No keys.",
   "scripts": {
     "start": "node src/cli.js",
     "desk": "node scripts/serve.mjs",

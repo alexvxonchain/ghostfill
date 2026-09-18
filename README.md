@@ -1,6 +1,6 @@
 # GHOSTFILL
 
-Paper desk for [pump.fun](https://pump.fun). Watches the nest inside the fill.
+Paper nest desk for [pump.fun](https://pump.fun): VOID / NEST / PRINT. No keys.
 
 ALEXYZ / session desk. No keys in this repo. Nothing sends.
 
