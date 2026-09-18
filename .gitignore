@@ -1,0 +1,12 @@
+node_modules/
+.playwright/
+frames/
+*.webm
+.DS_Store
+.vscode/
+__pycache__/
+.env
+assets/bed.wav
+assets/ghostfill_silent.mp4
+assets/ghostfill_post.mp4
+post-x.txt

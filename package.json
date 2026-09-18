@@ -1,0 +1,14 @@
+{
+  "name": "ghostfill",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Paper desk for pump.fun: NEST / VOID / PRINT. No keys.",
+  "scripts": {
+    "start": "node src/cli.js",
+    "desk": "node scripts/serve.mjs",
+    "test": "node --test",
+    "tape": "node scripts/dump-tape.mjs",
+    "video": "node scripts/dump-tape.mjs && python scripts/make_video.py"
+  }
+}

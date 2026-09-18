@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>GHOSTFILL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #060a08;
+      --panel: #0c1410;
+      --line: #1c3328;
+      --green: #5dff9a;
+      --mint: #d4ffe8;
+      --mute: #6d8a7a;
+      --nest: #e7c15a;
+      --void: #ff6b5a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #000; height: 100%; }
+    body { display: grid; place-items: center; }
+    #stage {
+      width: 1280px; height: 720px;
+      background: radial-gradient(900px 420px at 50% -10%, #102018 0%, var(--bg) 58%);
+      color: var(--mint);
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      position: relative; overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    #stage::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.12) 0 1px, transparent 1px 3px);
+      pointer-events: none;
+    }
+    header, footer {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 20px 28px 0;
+    }
+    .brand { font-family: Syne, sans-serif; font-weight: 800; letter-spacing: .14em; font-size: 22px; }
+    .brand span { color: var(--green); }
+    .meta, footer { color: var(--mute); font-size: 12px; letter-spacing: .08em; }
+    .grid {
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px;
+      padding: 16px 28px 10px; height: 560px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 20px 22px;
+      position: relative;
+    }
+    .k { font-size: 11px; color: var(--mute); letter-spacing: .18em; }
+    .log { height: 100%; overflow: hidden; font-size: 14px; line-height: 1.7; }
+    .log div { white-space: nowrap; }
+    .SCAN { color: var(--mint); }
+    .NEST { color: var(--nest); }
+    .VOID { color: var(--void); }
+    .PRINT, .PAPER, .CLOSE { color: var(--green); }
+    .ticker { font-family: Syne, sans-serif; font-size: 72px; line-height: .9; font-weight: 800; margin: 12px 0 8px; }
+    .pnl { font-family: Syne, sans-serif; font-size: 64px; color: var(--green); font-weight: 800; margin-top: 28px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; }
+    .stats div { border: 1px solid var(--line); padding: 10px 12px; }
+    .stats em { display: block; font-style: normal; color: var(--mute); font-size: 10px; letter-spacing: .14em; }
+    footer { padding: 0 28px 18px; }
+    #boot {
+      position: absolute; inset: 0; background: var(--bg); display: grid; place-items: center;
+      z-index: 5; transition: opacity .6s ease;
+    }
+    #boot .t { font-family: Syne, sans-serif; font-size: 64px; font-weight: 800; letter-spacing: .18em; }
+    #boot .t span { color: var(--green); }
+    #boot .s { color: var(--mute); margin-top: 10px; letter-spacing: .2em; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <div id="boot">
+      <div>
+        <div class="t">GHOST<span>FILL</span></div>
+        <div class="s">PAPER DESK · NEST / VOID / PRINT</div>
+      </div>
+    </div>
+    <header>
+      <div class="brand">GHOST<span>FILL</span></div>
+      <div class="meta">PUMP.FUN PAPER DESK · ALEXYZ · SEND FALSE</div>
+      <div class="meta" id="clock">00:00</div>
+    </header>
+    <div class="grid">
+      <div class="card">
+        <div class="k">TAPE</div>
+        <div class="log" id="log"></div>
+      </div>
+      <div class="card">
+        <div class="k">LOOKING AT</div>
+        <div class="ticker" id="ticker">KETTLE</div>
+        <div class="meta" id="event">SCAN</div>
+        <div class="stats">
+          <div><em>FILL</em><span id="fill">0.0%</span></div>
+          <div><em>UNIQUE</em><span id="uniq">0</span></div>
+          <div><em>NEST</em><span id="nest">0.00</span></div>
+          <div><em>MCAP</em><span id="mcap">$0.0k</span></div>
+        </div>
+        <div class="pnl" id="pnl">+0.00 SOL</div>
+        <div class="meta" id="note">watching the tape</div>
+      </div>
+    </div>
+    <footer>
+      <div>NO KEYS · NOTHING SENDS · OPEN ON PUMP.FUN</div>
+      <div>github.com/alexvxonchain/ghostfill</div>
+    </footer>
+  </div>
+  <script type="module">
+    import { at } from "./src/tape.js";
+    const t0 = performance.now();
+    function pad(n) { return String(Math.floor(n)).padStart(2, "0"); }
+    function tick(now) {
+      const t = (now - t0) / 1000;
+      if (t > 1.65) document.getElementById("boot").style.opacity = "0";
+      const s = at(t % 40);
+      document.getElementById("clock").textContent = `00:${pad(t % 60)}`;
+      document.getElementById("ticker").textContent = s.mint.ticker;
+      document.getElementById("event").textContent = s.event;
+      document.getElementById("event").className = "meta " + s.event;
+      document.getElementById("fill").textContent = s.mint.fill.toFixed(1) + "%";
+      document.getElementById("uniq").textContent = s.mint.unique;
+      document.getElementById("nest").textContent = s.mint.nest.toFixed(2);
+      document.getElementById("mcap").textContent = "$" + s.mint.mcap.toFixed(1) + "k";
+      const pnl = s.paper.active ? (s.paper.sol >= 0 ? "+" : "") + s.paper.sol.toFixed(2) + " SOL" : "wait";
+      document.getElementById("pnl").textContent = pnl;
+      document.getElementById("pnl").style.opacity = s.paper.active ? "1" : "0.25";
+      document.getElementById("note").textContent = s.note;
+      document.getElementById("log").innerHTML = s.logs.slice(-11).map((l) => {
+        const sec = String(Math.floor(l.t)).padStart(2, "0");
+        return `<div class="${l.kind.toUpperCase()}">00:${sec}  ${l.line}</div>`;
+      }).join("");
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
